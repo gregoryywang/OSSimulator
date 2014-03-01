@@ -2,7 +2,7 @@ package edu.uw.tcss422;
 
 import java.util.Scanner;
 
-public class CPU {
+public class Simulator {
 
 	/**
 	 * @param args
