@@ -1,4 +1,4 @@
-package edu.uw.tcss422;
+package edu.uw.tcss422.navigation;
 
 import java.util.Scanner;
 
