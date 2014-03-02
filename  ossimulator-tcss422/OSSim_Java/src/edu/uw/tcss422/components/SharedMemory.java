@@ -20,7 +20,18 @@ public class SharedMemory {
 	}
 	
 	/*
-	 * Adds the value to the stack and returns a boolean.
+	 * Returns a boolean whether or not the queue is empty.
+	 */
+	public boolean isEmpty(int index) {
+		boolean isEmpty;
+		
+		isEmpty = myMemory[index].isEmpty();
+		
+		return isEmpty;
+	}
+	
+	/*
+	 * Adds the value to the tail of the queue and returns a boolean.
 	 */
 	public boolean push(int index, int value) {
 		boolean isSuccessful;
@@ -31,7 +42,7 @@ public class SharedMemory {
 	}
 	
 	/*
-	 * Returns the head of the stack (or null of stack is empty).
+	 * Returns the head of the queue (or null if empty).
 	 */
 	public int pop(int index) {
 		int output;
