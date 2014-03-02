@@ -19,17 +19,32 @@ public class Scheduler {
 		
 		switch(mySchedule) {
 			case ROUND_ROBIN:
-				return 1;
+				return roundRobin(currentPID);
 				
 			case PRIORITY:
-				return 2;
+				return priority(currentPID);
 				
 			case LOTTERY:
-				return 3;
+				return lottery(currentPID);
 				
 			default:
 				return 0;
 		}
+	}
+
+	private long roundRobin(long currentPID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private long priority(long currentPID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private long lottery(long currentPID) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
