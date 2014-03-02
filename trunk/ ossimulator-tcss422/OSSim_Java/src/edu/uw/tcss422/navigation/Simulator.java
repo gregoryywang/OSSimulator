@@ -2,6 +2,8 @@ package edu.uw.tcss422.navigation;
 
 import java.util.Scanner;
 
+import edu.uw.tcss422.components.CPU;
+
 public class Simulator {
 
 	/**
@@ -23,6 +25,18 @@ public class Simulator {
 			schedulerPolicy = scan.nextInt();
 		} while (schedulerPolicy < 1 || schedulerPolicy > 3);
 		scan.close();
+		
+		//Create CPU object
+		CPU cpu = new CPU();
+		cpu.start();
+		try {
+      cpu.join();
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+		
+		
 	}
 
 }
