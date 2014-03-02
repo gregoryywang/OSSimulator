@@ -1,5 +1,7 @@
 package edu.uw.tcss422.types;
 
+import java.util.Random;
+
 public abstract class GenericProcess {
   
   /**
@@ -18,6 +20,23 @@ public abstract class GenericProcess {
   private int triggerPoint;
   
   /**
+   * Default constructor for all processes.
+   */
+  public GenericProcess() {
+    //Initialize triggerPoint to random number up to MAX_INSTRUCTIONS
+    Random random = new Random();
+    triggerPoint = random.nextInt(MAX_INSTRUCTIONS);
+  }
+  
+  /**
+   * Single arg constructor.
+   */
+  public GenericProcess(ProcessType processType) {
+    //Set the process type
+    this.processType = processType;
+  }
+  
+  /**
    * Returns process's trigger point.
    * @return The process's trigger point.
    */
@@ -32,12 +51,10 @@ public abstract class GenericProcess {
   public ProcessType getProcessType() {
     return processType;
   }
-  
+   
   /**
    * Simulates system call made by current process. Actual simulation code goes here.
    */
   public abstract void service();
   
-  
-
 }
