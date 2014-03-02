@@ -10,6 +10,11 @@ public abstract class GenericProcess {
   public static final int MAX_INSTRUCTIONS = 10000;
   
   /**
+   * Keeps track of the number of processes created. The value at instantiation of "Processes" will be the ProcessID.
+   */
+  private static int processes = -1;
+  
+  /**
    * The process type.
    */
   private ProcessType processType;
@@ -20,12 +25,18 @@ public abstract class GenericProcess {
   private int triggerPoint;
   
   /**
+   * Process ID.
+   */
+  private int processID;
+  
+  /**
    * Default constructor for all processes.
    */
   public GenericProcess() {
     //Initialize triggerPoint to random number up to MAX_INSTRUCTIONS
     Random random = new Random();
     triggerPoint = random.nextInt(MAX_INSTRUCTIONS);
+    processID = ++processes;
   }
   
   /**
@@ -50,6 +61,14 @@ public abstract class GenericProcess {
    */
   public ProcessType getProcessType() {
     return processType;
+  }
+  
+  /**
+   * Returns the process ID.
+   * @return The process ID.
+   */
+  public int getProcessID() {
+    return processID;
   }
    
   /**
