@@ -1,23 +1,23 @@
 package edu.uw.tcss422.components;
 
+import edu.uw.tcss422.types.SchedulePolicy;
+
 public class Scheduler {
 	
-	private enum schedule {ROUND_ROBIN, LOTTERY, PRIORITY};
-	
-	private schedule mySchedule;
+	private SchedulePolicy currentSchedule;
 	
 	public Scheduler(int scheduleInt) {
 		if (scheduleInt == 1)
-			mySchedule = schedule.ROUND_ROBIN;
+			currentSchedule = SchedulePolicy.ROUND_ROBIN;
 		else if (scheduleInt == 2)
-			mySchedule = schedule.PRIORITY;
+			currentSchedule = SchedulePolicy.PRIORITY;
 		else
-			mySchedule = schedule.LOTTERY;
+			currentSchedule = SchedulePolicy.LOTTERY;
 	}
 	
 	public long getNextProcessID(long currentPID) {
 		
-		switch(mySchedule) {
+		switch(currentSchedule) {
 			case ROUND_ROBIN:
 				return roundRobin(currentPID);
 				
