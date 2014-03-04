@@ -15,34 +15,34 @@ public class Scheduler {
 			currentSchedule = SchedulePolicy.LOTTERY;
 	}
 	
-	public long getNextProcessID(long currentPID) {
+	public long getNextProcessID() {
 		
 		switch(currentSchedule) {
 			case ROUND_ROBIN:
-				return roundRobin(currentPID);
+				return roundRobin();
 				
 			case PRIORITY:
-				return priority(currentPID);
+				return priority();
 				
 			case LOTTERY:
-				return lottery(currentPID);
+				return lottery();
 				
 			default:
 				return 0;
 		}
 	}
 
-	private long roundRobin(long currentPID) {
+	private long roundRobin() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	private long priority(long currentPID) {
+	private long priority() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	private long lottery(long currentPID) {
+	private long lottery() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
