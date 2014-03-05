@@ -1,5 +1,6 @@
 package edu.uw.tcss422.components;
 
+import edu.uw.tcss422.types.GenericProcess;
 import edu.uw.tcss422.types.ProcessState;
 
 public class ProcessControlBlock {
@@ -22,7 +23,7 @@ public class ProcessControlBlock {
 	/**
 	 * The actual process.
 	 */
-	private Process process;
+	private GenericProcess process;
 	
 	/**
 	 * Which mutex lock does it own. Can be used for producer-consumer pair.
@@ -32,12 +33,10 @@ public class ProcessControlBlock {
 	/**
 	 * Construct a Process Control Block. Initially the step count is 0 and the ProcessState is Ready.
 	 * @param pid the process ID
-	 * @param nextStep 
-	 * @param state
-	 * @param process
-	 * @param mutex
+	 * @param process the process type
+	 * @param mutex the mutex
 	 */
-	public ProcessControlBlock(int pid, Process process, int mutex) {
+	public ProcessControlBlock(int pid, GenericProcess process, int mutex) {
 		this.pid = pid;
 		this.nextStep = 0;
 		this.state = ProcessState.READY;
@@ -74,7 +73,7 @@ public class ProcessControlBlock {
 	 * Get the actual process
 	 * @return the actual process
 	 */
-	public Process getProcess() {
+	public GenericProcess getProcess() {
 		return process;
 	}
 	
