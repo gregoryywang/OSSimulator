@@ -83,9 +83,18 @@ public class SystemTimer {
 	}
 	
 	/**
+	 * Created to support "For purposes of this simulation, you can set all process quanta to the same value"
+	 * as stated in project description.
+	 * @return long delayPeriod The time delay interval in milliseconds.
+	 */
+	public long getTimeDelayInterval() {
+		return delayPeriod;
+	}
+	
+	
+	/**
 	 * Inner class that will be called to run when triggered by the Timer.
 	 * @author yongyuwang
-	 *
 	 */
 	class GenerateInterrupts extends TimerTask {
 		/**
