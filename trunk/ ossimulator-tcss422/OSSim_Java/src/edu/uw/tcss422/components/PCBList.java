@@ -1,6 +1,6 @@
 package edu.uw.tcss422.components;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import process.ComputeProcess;
 import process.ConsumerProcess;
@@ -11,20 +11,22 @@ import edu.uw.tcss422.types.GenericProcess;
 
 public class PCBList {
 	
-	private ArrayList<ProcessControlBlock> pcbList;
+	private HashMap<Integer, ProcessControlBlock> pcbList;
 	
 	PCBList(int UIprocesses, int calculatingProcesses, int ProdConsumProcesses, int IOprocesses) {
-		pcbList = new ArrayList<ProcessControlBlock>();
+		pcbList = new HashMap<Integer, ProcessControlBlock>();
 		int pid = 1; // Usually PID 0 is for scheduler.
 		int mutex = 0; // The memory location that the producer-consumer pair looking at.
 					   // A pair share the same mutex number.
 		for (int i = 0; i < UIprocesses; i++) {
 			GenericProcess ui = new UIProcess();
-			pcbList.add(new ProcessControlBlock(pid++, ui));
+			pcbList.put(pid, new ProcessControlBlock(pid, ui));
+			pid++;
 		}
 		for (int i = 0; i < calculatingProcesses; i++) {
 			GenericProcess compute = new ComputeProcess();
-			pcbList.add(new ProcessControlBlock(pid++, compute));
+			pcbList.put(pid, new ProcessControlBlock(pid, compute));
+			pid++;
 		}
 		for (int i = 0; i < ProdConsumProcesses; i++) {
 			GenericProcess producer = new ProducerProcess();
@@ -33,18 +35,19 @@ public class PCBList {
 			ProcessControlBlock consumerPCB = new ProcessControlBlock(pid++, consumer);
 			producerPCB.setMutex(mutex);
 			consumerPCB.setMutex(mutex);
-			pcbList.add(producerPCB);
-			pcbList.add(consumerPCB);
+			pcbList.put(producerPCB.getPid(), producerPCB);
+			pcbList.put(consumerPCB.getPid(), consumerPCB);
 			mutex++;
 		}
 		for (int i = 0; i < IOprocesses; i++) {
 			GenericProcess io = new IOProcess();
-			pcbList.add(new ProcessControlBlock(pid++, io));
+			pcbList.put(pid, new ProcessControlBlock(pid, io));
+			pid++;
 		}
 		
 	}
 	
-	public ArrayList<ProcessControlBlock> getPCBList() {
+	public HashMap<Integer, ProcessControlBlock> getPCBList() {
 		return pcbList;
 	}
 }
