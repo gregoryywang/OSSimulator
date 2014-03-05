@@ -25,7 +25,11 @@ public abstract class GenericProcess {
   private int numOfInstructions;
   
   /**
-   * Trigger point. The address where the actual service call is made.
+   * The addresses where the actual service call is made. <br>
+   * <br>
+   * Each process should have different instruction addresses that perform system calls. <br> 
+   * This should be initialized by child Process class according to the ProcessType. <br>
+   * For example, I/O system calls, inter-process communication request.
    */
   protected int[] triggerPoints;
   
