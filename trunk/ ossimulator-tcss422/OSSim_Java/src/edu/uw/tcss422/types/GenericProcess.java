@@ -5,14 +5,14 @@ import java.util.Random;
 public abstract class GenericProcess {
   
   /**
-   * The number of instructions.
+   * The maximum number of instructions.
    */
   public static final int MAX_INSTRUCTIONS = 10000;
   
   /**
-   * Keeps track of the number of processes created. The value at instantiation of "Processes" will be the ProcessID.
+   * The minimum number of instructions.
    */
-  private static int processes = -1;
+  public static final int MIN_INSTRUCTIONS = 1000;
   
   /**
    * The process type.
@@ -20,24 +20,14 @@ public abstract class GenericProcess {
   private ProcessType processType;
   
   /**
+   * The number of instructions of this process.
+   */
+  private int numOfInstructions;
+  
+  /**
    * Trigger point. The address where the actual service call is made.
    */
-  private int triggerPoint;
-  
-  /**
-   * Process ID.
-   */
-  private int processID;
-  
-  /**
-   * Default constructor for all processes.
-   */
-  public GenericProcess() {
-    //Initialize triggerPoint to random number up to MAX_INSTRUCTIONS
-    Random random = new Random();
-    triggerPoint = random.nextInt(MAX_INSTRUCTIONS);
-    processID = ++processes;
-  }
+  protected int[] triggerPoints;
   
   /**
    * Single arg constructor.
@@ -45,14 +35,17 @@ public abstract class GenericProcess {
   public GenericProcess(ProcessType processType) {
     //Set the process type
     this.processType = processType;
+    Random r = new Random();
+    // Generate a number between 1000 to 10000 inclusively.
+    numOfInstructions = r.nextInt(MAX_INSTRUCTIONS - MIN_INSTRUCTIONS + 1) + MIN_INSTRUCTIONS; 
   }
   
   /**
    * Returns process's trigger point.
    * @return The process's trigger point.
    */
-  public int getTriggerPoint() {
-    return triggerPoint;
+  public int[] getTriggerPoints() {
+    return triggerPoints;
   }
   
   /**
@@ -63,17 +56,7 @@ public abstract class GenericProcess {
     return processType;
   }
   
-  /**
-   * Returns the process ID.
-   * @return The process ID.
-   */
-  public int getProcessID() {
-    return processID;
+  public int getNumOfInstructions() {
+	  return numOfInstructions;
   }
-   
-  /**
-   * Simulates system call made by current process. Actual simulation code goes here.
-   */
-  public abstract void service();
-  
 }
