@@ -7,6 +7,8 @@ public class IdleProcess extends GenericProcess {
 
   public IdleProcess() {
 		super(ProcessType.IDLE);
+		// It doesn't trigger any interupt 
+		triggerPoint = 0;
 	}
 
 }
