@@ -1,3 +1,14 @@
+/**
+ * SystemTimer.java
+ * Uses Timer to generate a TimerTask to call the interrupt method in the CPU at fixed intervals.
+ * Intervals can either be random generated on creation within specified min and max limits or
+ * be a fixed value passed through the constructor.
+ * Note: since TimerTask is already threaded upon scheduling, no further action is necessary.
+ * 
+ * @author yongyuwang
+ * @version NonSandbox 1-2
+ */
+
 package edu.uw.tcss422.components;
 
 import java.util.Random;
@@ -7,9 +18,23 @@ import java.util.TimerTask;
 
 public class SystemTimer {
 	
+	/**
+	 * Displays debugging information when set.
+	 */
 	private boolean debugFlag = false;
+	
+	/**
+	 * The delay period between interrupts. Can either be set manually or randomly generated.
+	 */
+	private long delayPeriod;
+	
+	/**
+	 * Reference to the CPU object to call interrupts from.
+	 */
+	private CPU currentCPU;
 
 	/**
+	 * "Default" constructor that triggers CPU interrupt at a randomly generated interval.
 	 * @param currentCPU A reference to the CPU to call its interrupt method.
 	 * @param min The minimum delay time in milliseconds to be randomly generated.
 	 * @param max The maximum delay time in milliseconds to be randomly generated.
@@ -18,15 +43,41 @@ public class SystemTimer {
 	public SystemTimer(CPU currentCPU, int min, int max, boolean debugFlag) {
 		
 		this.debugFlag = debugFlag;
+		this.currentCPU = currentCPU;
 		
 		Random random = new Random();
-		long period = random.nextInt((max - min) + 1) + min;
+		delayPeriod = random.nextInt((max - min) + 1) + min;
 		
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new GenerateInterrupts(), 0, Long.valueOf(period));
+		
+		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
+		timer.scheduleAtFixedRate(new GenerateInterrupts(), 0, Long.valueOf(delayPeriod));
 		
 		if(debugFlag) {
-			System.out.println("System timer delay period is set to " + period + " milliseconds.");
+			System.out.println("System timer delay period is set to " + delayPeriod + " milliseconds.");
+		}
+
+	}
+	
+	/**
+	 * Alternative constructor that triggers CPU interrupt at specified interval.
+	 * @param currentCPU A reference to the CPU to call its interrupt method.
+	 * @param delayPeriod A fixed interval to generate interrupts.
+	 * @param debugFlag Will print debug info to console if set to true.
+	 */
+	public SystemTimer(CPU currentCPU, int delayPeriod, boolean debugFlag) {
+		
+		this.debugFlag = debugFlag;
+		this.currentCPU = currentCPU;
+		this.delayPeriod = delayPeriod;
+		
+		Timer timer = new Timer();
+		
+		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
+		timer.scheduleAtFixedRate(new GenerateInterrupts(), 0, Long.valueOf(this.delayPeriod));
+		
+		if(debugFlag) {
+			System.out.println("System timer delay period is set to " + this.delayPeriod + " milliseconds.");
 		}
 
 	}
@@ -37,12 +88,25 @@ public class SystemTimer {
 	 *
 	 */
 	class GenerateInterrupts extends TimerTask {
+		/**
+		 * Calls on the interrupt() method in CPU to generate a interrupt.
+		 */
 		public void run() {
 			// calls interrupt method in CPU
 			//TODO: implement interrupt method
 			if(debugFlag) {
 				System.out.println("Timer has triggered a CPU interrupt.");
 			}
+		}
+		
+		/**
+		 * Cancels the timer.
+		 * @return True if this task is scheduled for one-time execution and has not yet run, or this task is scheduled 
+		 * for repeated execution. Returns false if the task was scheduled for one-time execution and has already run, 
+		 * or if the task was never scheduled, or if the task was already cancelled.
+		 */
+		public boolean stopTimer() {
+			return this.cancel();
 		}
 	}
 }
