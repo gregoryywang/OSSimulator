@@ -34,14 +34,12 @@ public class ProcessControlBlock {
 	 * Construct a Process Control Block. Initially the step count is 0 and the ProcessState is Ready.
 	 * @param pid the process ID
 	 * @param process the process type
-	 * @param mutex the mutex
 	 */
-	public ProcessControlBlock(int pid, GenericProcess process, int mutex) {
+	public ProcessControlBlock(int pid, GenericProcess process) {
 		this.pid = pid;
 		this.nextStep = 0;
 		this.state = ProcessState.READY;
 		this.process = process;
-		this.mutex = mutex;
 	}
 	
 	/**
