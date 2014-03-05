@@ -42,6 +42,7 @@ public abstract class GenericProcess {
     Random r = new Random();
     // Generate a number between 1000 to 10000 inclusively.
     numOfInstructions = r.nextInt(MAX_INSTRUCTIONS - MIN_INSTRUCTIONS + 1) + MIN_INSTRUCTIONS; 
+    triggerPoint = r.nextInt(numOfInstructions);
   }
   
   /**
