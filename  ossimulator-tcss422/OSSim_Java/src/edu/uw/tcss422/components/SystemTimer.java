@@ -10,12 +10,12 @@ public class SystemTimer {
 	private boolean debugFlag = false;
 
 	/**
-	 * 
+	 * @param currentCPU A reference to the CPU to call its interrupt method.
 	 * @param min The minimum delay time in milliseconds to be randomly generated.
 	 * @param max The maximum delay time in milliseconds to be randomly generated.
 	 * @param debugFlag Will print debug info to console if set to true.
 	 */
-	public SystemTimer(int min, int max, boolean debugFlag) {
+	public SystemTimer(CPU currentCPU, int min, int max, boolean debugFlag) {
 		
 		this.debugFlag = debugFlag;
 		
@@ -39,6 +39,7 @@ public class SystemTimer {
 	class GenerateInterrupts extends TimerTask {
 		public void run() {
 			// calls interrupt method in CPU
+			//TODO: implement interrupt method
 			if(debugFlag) {
 				System.out.println("Timer has triggered a CPU interrupt.");
 			}
