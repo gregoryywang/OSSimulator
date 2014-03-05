@@ -40,9 +40,8 @@ public class SystemTimer {
 	 * @param max The maximum delay time in milliseconds to be randomly generated.
 	 * @param debugFlag Will print debug info to console if set to true.
 	 */
-	public SystemTimer(CPU currentCPU, int min, int max, boolean debugFlag) {
+	public SystemTimer(CPU currentCPU, int min, int max) {
 		
-		this.debugFlag = debugFlag;
 		this.currentCPU = currentCPU;
 		
 		Random random = new Random();
@@ -65,9 +64,8 @@ public class SystemTimer {
 	 * @param delayPeriod A fixed interval to generate interrupts.
 	 * @param debugFlag Will print debug info to console if set to true.
 	 */
-	public SystemTimer(CPU currentCPU, int delayPeriod, boolean debugFlag) {
+	public SystemTimer(CPU currentCPU, int delayPeriod) {
 		
-		this.debugFlag = debugFlag;
 		this.currentCPU = currentCPU;
 		this.delayPeriod = delayPeriod;
 		
