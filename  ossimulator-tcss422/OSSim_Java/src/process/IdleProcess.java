@@ -1,13 +1,12 @@
 package process;
 
 import edu.uw.tcss422.types.GenericProcess;
+import edu.uw.tcss422.types.ProcessType;
 
 public class IdleProcess extends GenericProcess {
 
-  @Override
-  public void service() {
-    // TODO Auto-generated method stub
-    
-  }
+  public IdleProcess() {
+		super(ProcessType.IDLE);
+	}
 
 }
