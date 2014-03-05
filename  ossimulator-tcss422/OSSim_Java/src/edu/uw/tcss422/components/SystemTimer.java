@@ -20,13 +20,13 @@ public class SystemTimer {
 		this.debugFlag = debugFlag;
 		
 		Random random = new Random();
-		long delay = random.nextInt((max - min) + 1) + min;
+		long period = random.nextInt((max - min) + 1) + min;
 		
 		Timer timer = new Timer();
-		timer.schedule(new GenerateInterrupts(), Long.valueOf(delay));
+		timer.scheduleAtFixedRate(new GenerateInterrupts(), 0, Long.valueOf(period));
 		
 		if(debugFlag) {
-			System.out.println("System timer delay set to " + delay + " milliseconds.");
+			System.out.println("System timer delay period is set to " + period + " milliseconds.");
 		}
 
 	}
