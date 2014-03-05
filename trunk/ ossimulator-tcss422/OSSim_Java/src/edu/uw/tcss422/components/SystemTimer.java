@@ -9,6 +9,12 @@ public class SystemTimer {
 	
 	private boolean debugFlag = false;
 
+	/**
+	 * 
+	 * @param min The minimum delay time in milliseconds to be randomly generated.
+	 * @param max The maximum delay time in milliseconds to be randomly generated.
+	 * @param debugFlag Will print debug info to console if set to true.
+	 */
 	public SystemTimer(int min, int max, boolean debugFlag) {
 		
 		this.debugFlag = debugFlag;
@@ -25,6 +31,11 @@ public class SystemTimer {
 
 	}
 	
+	/**
+	 * Inner class that will be called to run when triggered by the Timer.
+	 * @author yongyuwang
+	 *
+	 */
 	class GenerateInterrupts extends TimerTask {
 		public void run() {
 			// calls interrupt method in CPU
