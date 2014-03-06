@@ -17,8 +17,6 @@ public class Simulator {
 		int calculatingProcesses = scan.nextInt();
 		System.out.print("Enter the number of producer/consumer pairs you would like: ");
 		int ProdConsumProcesses = scan.nextInt();
-		System.out.print("Enter the number of I/O processes you would like: ");
-		int IOprocesses = scan.nextInt();
 		int schedulerPolicy = 0;
 		do {
 			System.out.print("Please indicate which scheduling policy (1 for round-robin, 2 for priority, 3 for lottery): ");
