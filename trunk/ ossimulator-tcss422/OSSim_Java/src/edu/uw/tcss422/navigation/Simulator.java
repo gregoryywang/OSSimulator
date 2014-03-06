@@ -3,6 +3,9 @@ package edu.uw.tcss422.navigation;
 import java.util.Scanner;
 
 import edu.uw.tcss422.components.CPU;
+import edu.uw.tcss422.components.PCBList;
+import edu.uw.tcss422.components.Scheduler;
+import edu.uw.tcss422.components.SharedMemory;
 
 public class Simulator {
 
@@ -24,8 +27,17 @@ public class Simulator {
 		} while (schedulerPolicy < 1 || schedulerPolicy > 3);
 		scan.close();
 		
+		//Create PCB object
+		PCBList pcbList = new PCBList(UIprocesses, calculatingProcesses, ProdConsumProcesses);
+		
+		//Create Scheduler object
+		Scheduler scheduler = new Scheduler(schedulerPolicy, pcbList);
+		
+		//Shared Memory
+		SharedMemory memory = new SharedMemory(1, ProdConsumProcesses);
+		
 		//Create CPU object
-		CPU cpu = new CPU();
+		CPU cpu = new CPU(pcbList, memory, scheduler);
 		cpu.start();
 		try {
       cpu.join();
