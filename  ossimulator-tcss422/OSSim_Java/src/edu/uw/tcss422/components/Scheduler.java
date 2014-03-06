@@ -20,17 +20,20 @@ public class Scheduler {
 			currentSchedule = SchedulePolicy.LOTTERY;
 	}
 	
-	public long getNextProcessID(PCBList currentList) {
-		
+	/**
+	 * Determines the next process to run according to the current scheduler policy.
+	 * @return The processID of the next process for the CPU to run.
+	 */
+	public int getNextProcessID() {
 		switch(currentSchedule) {
 			case ROUND_ROBIN:
-				return roundRobin(currentList);
+				return roundRobin();
 				
 			case PRIORITY:
-				return priority(currentList);
+				return priority();
 				
 			case LOTTERY:
-				return lottery(currentList);
+				return lottery();
 				
 			default:
 				return 0;
@@ -39,19 +42,18 @@ public class Scheduler {
 
 	/**
 	 * Finds the next processID following the round-robin scheduling policy.
-	 * @param currentList list of all processes
 	 * @return next processID to run
 	 */
-	private long roundRobin(PCBList currentList) {
+	private int roundRobin() {
 		int currentPID = 0;	// Should maybe begin at 1?
 		do {
-			currentPID++;
-		} while (currentList.getPCBList().get(currentPID).getState() == ProcessState.RUNNING);
+			currentPID = currentPID++ % pcbList.getPCBList().size();
+		} while (pcbList.getPCBList().get(currentPID).getState() == ProcessState.RUNNING);
 		
 		int nextPID = currentPID++;
 		
-		while (currentList.getPCBList().get(nextPID).getState() != ProcessState.BLOCKED) {
-			nextPID = (nextPID++) % currentList.getPCBList().size();
+		while (pcbList.getPCBList().get(nextPID).getState() == ProcessState.BLOCKED) {
+			nextPID = nextPID++ % pcbList.getPCBList().size();
 		}
 		
 		return nextPID;
@@ -59,24 +61,22 @@ public class Scheduler {
 
 	/**
 	 * Finds the next processID following the priority scheduling policy.
-	 * @param currentList list of all processes
 	 * @return next processID to run
 	 */
-	private long priority(PCBList currentList) {
+	private int priority() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	/**
 	 * Finds the next processID following the lottery scheduling policy.
-	 * @param currentList list of all processes
 	 * @return next processID to run
 	 */
-	private long lottery(PCBList currentList) {
-		int size = currentList.getPCBList().size();
+	private int lottery() {
+		int size = pcbList.getPCBList().size();
 		ProcessControlBlock pcb;
 		do {
-			pcb = currentList.getPCBList().get((int) (Math.random() * size));
+			pcb = pcbList.getPCBList().get((int) (Math.random() * size));
 		} while (pcb.getState() != ProcessState.BLOCKED);
 		
 		return pcb.getPid();

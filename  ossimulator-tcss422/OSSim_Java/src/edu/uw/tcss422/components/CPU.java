@@ -43,9 +43,9 @@ public class CPU extends Thread {
 	  int triggerPoint = 0;
 	  int PC = 0;
 
-	  while(bKill) {
+	  while (bKill) {
 		  //Get next process to run
-		  int PID = (int) scheduler.getNextProcessID(pcbList); //Temp until scheduler interface changes
+		  int PID = scheduler.getNextProcessID(); //Temp until scheduler interface changes
 
 		  //Retrieve PCB for current process
 		  ProcessControlBlock pcb = pcbList.getPCB(PID);
