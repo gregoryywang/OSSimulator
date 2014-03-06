@@ -36,6 +36,11 @@ public class Scheduler {
 		}
 	}
 
+	/**
+	 * Finds the next processID following the round-robin scheduling policy.
+	 * @param currentList list of all processes
+	 * @return next processID to run
+	 */
 	private long roundRobin(PCBList currentList) {
 		int currentPID = 0;	// Should maybe begin at 1?
 		do {
@@ -51,11 +56,21 @@ public class Scheduler {
 		return nextPID;
 	}
 
+	/**
+	 * Finds the next processID following the priority scheduling policy.
+	 * @param currentList list of all processes
+	 * @return next processID to run
+	 */
 	private long priority(PCBList currentList) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	/**
+	 * Finds the next processID following the lottery scheduling policy.
+	 * @param currentList list of all processes
+	 * @return next processID to run
+	 */
 	private long lottery(PCBList currentList) {
 		int size = currentList.getPCBList().size();
 		ProcessControlBlock pcb;
