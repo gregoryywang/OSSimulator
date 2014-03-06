@@ -7,7 +7,11 @@ public class Scheduler {
 	
 	private SchedulePolicy currentSchedule;
 	
-	public Scheduler(int scheduleInt) {
+	private PCBList pcbList;
+	
+	public Scheduler(int scheduleInt, PCBList pcbList) {
+	  this.pcbList = pcbList;
+	  
 		if (scheduleInt == 1)
 			currentSchedule = SchedulePolicy.ROUND_ROBIN;
 		else if (scheduleInt == 2)
