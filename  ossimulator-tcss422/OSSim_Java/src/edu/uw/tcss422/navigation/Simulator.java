@@ -36,17 +36,18 @@ public class Simulator {
 		//Shared Memory
 		SharedMemory memory = new SharedMemory(1, ProdConsumProcesses);
 		
+		System.out.println("Creating CPU.");
+		
 		//Create CPU object
 		CPU cpu = new CPU(pcbList, memory, scheduler);
 		cpu.start();
 		try {
-      cpu.join();
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-		
-		
+			cpu.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 	}
 
 }
