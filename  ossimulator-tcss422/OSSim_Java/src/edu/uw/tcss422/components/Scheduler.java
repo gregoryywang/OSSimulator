@@ -48,7 +48,9 @@ public class Scheduler {
 		int currentPID = 0;	// Should maybe begin at 1?
 		do {
 			currentPID = currentPID++ % pcbList.getPCBList().size();
-		} while (pcbList.getPCBList().get(currentPID).getState() == ProcessState.RUNNING);
+		} while (pcbList.getPCBList().get(currentPID).getState() == ProcessState.RUNNING && currentPID != 0);
+		// currentPID will get back to zero (because of mod operator) if no process is running.
+		// Added second condition to prevent infinite loop.
 		
 		int nextPID = currentPID++;
 		
@@ -77,7 +79,7 @@ public class Scheduler {
 		ProcessControlBlock pcb;
 		do {
 			pcb = pcbList.getPCBList().get((int) (Math.random() * size));
-		} while (pcb.getState() != ProcessState.BLOCKED);
+		} while (pcb.getState() != ProcessState.BLOCKED && pcb.getState() != ProcessState.INTERRUPTED);
 		
 		return pcb.getPid();
 	}
