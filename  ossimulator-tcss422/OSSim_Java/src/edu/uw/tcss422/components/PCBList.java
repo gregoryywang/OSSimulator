@@ -50,4 +50,10 @@ public class PCBList {
 	public HashMap<Integer, ProcessControlBlock> getPCBList() {
 		return pcbList;
 	}
+	
+	public ProcessControlBlock getPCB(int PID) {
+		return pcbList.get(PID);
+	}
+	
+	
 }
