@@ -10,11 +10,6 @@ public abstract class GenericProcess {
   public static final int MAX_INSTRUCTIONS = 10000;
   
   /**
-   * The minimum number of instructions.
-   */
-  public static final int MIN_INSTRUCTIONS = 1000;
-  
-  /**
    * The process type.
    */
   private ProcessType processType;
@@ -40,16 +35,14 @@ public abstract class GenericProcess {
     //Set the process type
     this.processType = processType;
     Random r = new Random();
-    // Generate a number between 1000 to 10000 inclusively.
-    numOfInstructions = r.nextInt(MAX_INSTRUCTIONS - MIN_INSTRUCTIONS + 1) + MIN_INSTRUCTIONS; 
-    triggerPoint = r.nextInt(numOfInstructions);
+    triggerPoint = r.nextInt(MAX_INSTRUCTIONS);
   }
   
   /**
    * Returns process's trigger point.
    * @return The process's trigger point.
    */
-  public int getTriggerPoints() {
+  public int getTriggerPoint() {
     return triggerPoint;
   }
   
