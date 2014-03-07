@@ -36,8 +36,8 @@ public class SystemTimer {
 	/**
 	 * "Default" constructor that triggers CPU interrupt at a randomly generated interval.
 	 * @param currentCPU A reference to the CPU to call its interrupt method.
-	 * @param min The minimum delay time in milliseconds to be randomly generated.
-	 * @param max The maximum delay time in milliseconds to be randomly generated.
+	 * @param min The minimum time delay in milliseconds to randomly generate interrupts.
+	 * @param max The maximum time delay in milliseconds to randomly generate interrupts.
 	 * @param debugFlag Will print debug info to console if set to true.
 	 */
 	public SystemTimer(CPU currentCPU, int min, int max) {
@@ -91,7 +91,7 @@ public class SystemTimer {
 	
 	/**
 	 * Sets debug flag to enable diagnostic messages.
-	 * @param value
+	 * @param value True/False for debug mode.
 	 */
 	public void setDebugFlag(boolean value) {
 		debugFlag = value;
