@@ -61,7 +61,7 @@ public class CPU extends Thread {
 
 		  //Loop through all instructions and roll over when max instructions has been met.
 		  while(triggerPoint != PC )
-			  PC = (PC + 1) % GenericProcess.MAX_INSTRUCTIONS;
+			  PC = (PC + 1) % (GenericProcess.MAX_INSTRUCTIONS - 1);
 
 		  //Make system call based on process type
 		  systemCall(type);
