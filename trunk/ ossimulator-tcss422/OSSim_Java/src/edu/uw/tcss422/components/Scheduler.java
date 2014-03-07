@@ -80,7 +80,7 @@ public class Scheduler {
 		ProcessControlBlock pcb;
 		do {
 			pcb = pcbList.getPCBList().get((int) (Math.random() * size));
-		} while (pcb.getState() != ProcessState.BLOCKED && pcb.getState() != ProcessState.INTERRUPTED);
+		} while (pcb.getState() != ProcessState.BLOCKED);
 		
 		return pcb.getPid();
 	}
