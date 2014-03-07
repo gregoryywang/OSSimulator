@@ -26,8 +26,9 @@ public class CPU extends Thread {
   private boolean bKill = false;
   
   /**
-   * 
+   * Interrupted condition variable.
    */
+  private boolean bInterrupted = false;
   
   public CPU(PCBList pcbList, SharedMemory sharedMemory, Scheduler scheduler) {
     this.pcbList = pcbList;
@@ -59,9 +60,6 @@ public class CPU extends Thread {
 
 		  //Get current PC
 		  PC = pcb.getNextStep();
-
-		  //Get process type
-		  ProcessType type = pcb.getProcess().getProcessType();
 
 		  //Loop through all instructions and roll over when max instructions has been met.
 		  while(triggerPoint != PC )
