@@ -39,6 +39,14 @@ public class Scheduler {
 				return 0;
 		}
 	}
+	
+	/**
+	 * Returns current scheduling policy.
+	 * @returns Current scheduling policy.
+	 */
+	public SchedulePolicy getCurrentSchedulerPolicy() {
+		return currentSchedule;
+	}
 
 	/**
 	 * Finds the next processID following the round-robin scheduling policy.
