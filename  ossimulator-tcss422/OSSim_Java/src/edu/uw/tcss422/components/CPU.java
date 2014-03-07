@@ -2,6 +2,7 @@ package edu.uw.tcss422.components;
 
 import edu.uw.tcss422.types.GenericProcess;
 import edu.uw.tcss422.types.ProcessType;
+import edu.uw.tcss422.types.SchedulePolicy;
 
 public class CPU extends Thread {
   
@@ -23,7 +24,7 @@ public class CPU extends Thread {
   /**
    * Kill condition variable.
    */
-  private boolean bKill = false;
+  private boolean bKill = true;
   
   /**
    * Interrupted condition variable.
@@ -47,8 +48,9 @@ public class CPU extends Thread {
   public void run() {
 	  int triggerPoint = 0;
 	  int PC = 0;
-
+		
 	  while (bKill) {
+		  
 		  //Get next process to run
 		  int PID = scheduler.getNextProcessID(); //Temp until scheduler interface changes
 
@@ -61,14 +63,21 @@ public class CPU extends Thread {
 		  //Get current PC
 		  PC = pcb.getNextStep();
 
-		  //Loop through all instructions and roll over when max instructions has been met.
-		  while(triggerPoint != PC )
-			  PC = (PC + 1) % (GenericProcess.MAX_INSTRUCTIONS - 1);
-
-		  //Make system call based on process type
-		  systemCall(PID);
+		  //Loop through all instructions
+		  while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
+			
+			if(PC == triggerPoint) {
+				//Make system call based on process type
+				systemCall(PID);
+			} else if(scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
+					|| scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY
+					&& PC == GenericProcess.MAX_INSTRUCTIONS - 1){
+				break;
+			}
+			
+			PC = (PC + 1) % (GenericProcess.MAX_INSTRUCTIONS - 1);
+		  }
 	  }
-
   }
   
   /**
