@@ -50,7 +50,7 @@ public class SystemTimer {
 		Timer timer = new Timer();
 		
 		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
-		timer.scheduleAtFixedRate(new GenerateInterrupts(), 0, Long.valueOf(delayPeriod));
+		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(delayPeriod));
 		
 		if(debugFlag) {
 			System.out.println("System timer delay period is set to " + delayPeriod + " milliseconds.");
@@ -72,7 +72,7 @@ public class SystemTimer {
 		Timer timer = new Timer();
 		
 		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
-		timer.scheduleAtFixedRate(new GenerateInterrupts(), 0, Long.valueOf(this.delayPeriod));
+		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(this.delayPeriod));
 		
 		if(debugFlag) {
 			System.out.println("System timer delay period is set to " + this.delayPeriod + " milliseconds.");
@@ -89,12 +89,20 @@ public class SystemTimer {
 		return delayPeriod;
 	}
 	
+	/**
+	 * Sets debug flag to enable diagnostic messages.
+	 * @param value
+	 */
+	public void setDebugFlag(boolean value) {
+		debugFlag = value;
+	}
+	
 	
 	/**
-	 * Inner class that will be called to run when triggered by the Timer.
+	 * Inner class that will be called to run when triggered. Extends TimerTask.
 	 * @author yongyuwang
 	 */
-	class GenerateInterrupts extends TimerTask {
+	class TimerInterrupt extends TimerTask {
 		/**
 		 * Calls on the interrupt() method in CPU to generate a interrupt.
 		 */
