@@ -31,6 +31,11 @@ public class ProcessControlBlock {
 	private int mutex;
 	
 	/**
+	 * The priority of the process.
+	 */
+	private int priority;
+	
+	/**
 	 * Construct a Process Control Block. Initially the step count is 0 and the ProcessState is Ready.
 	 * @param pid the process ID
 	 * @param process the process type
@@ -105,5 +110,21 @@ public class ProcessControlBlock {
 	 */
 	public void setMutex(int mutex) {
 		this.mutex = mutex;
+	}
+	
+	/**
+	 * Set the priority.
+	 * @param priority the priority
+	 */
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	
+	/**
+	 * Returns the priority for the process.
+	 * @return the priority
+	 */
+	public int getPriority() {
+		return priority;
 	}
 }

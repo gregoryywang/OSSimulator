@@ -45,9 +45,10 @@ public class Scheduler {
 	 * @return next processID to run
 	 */
 	private int roundRobin() {
+		int size = pcbList.getPCBList().size();
 		int currentPID = 0;	// Should maybe begin at 1?
 		do {
-			currentPID = currentPID++ % pcbList.getPCBList().size();
+			currentPID = ++currentPID % size;
 		} while (pcbList.getPCBList().get(currentPID).getState() == ProcessState.RUNNING && currentPID != 0);
 		// currentPID will get back to zero (because of mod operator) if no process is running.
 		// Added second condition to prevent infinite loop.
@@ -55,7 +56,7 @@ public class Scheduler {
 		int nextPID = currentPID++;
 		
 		while (pcbList.getPCBList().get(nextPID).getState() == ProcessState.BLOCKED) {
-			nextPID = nextPID++ % pcbList.getPCBList().size();
+			nextPID = ++nextPID % size;
 		}
 		
 		return nextPID;
