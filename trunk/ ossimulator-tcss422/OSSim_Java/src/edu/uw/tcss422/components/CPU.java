@@ -25,6 +25,10 @@ public class CPU extends Thread {
    */
   private boolean bKill = false;
   
+  /**
+   * 
+   */
+  
   public CPU(PCBList pcbList, SharedMemory sharedMemory, Scheduler scheduler) {
     this.pcbList = pcbList;
     this.sharedMemory = sharedMemory;
@@ -64,7 +68,7 @@ public class CPU extends Thread {
 			  PC = (PC + 1) % (GenericProcess.MAX_INSTRUCTIONS - 1);
 
 		  //Make system call based on process type
-		  systemCall(type);
+		  systemCall(PID);
 	  }
 
   }
@@ -74,7 +78,9 @@ public class CPU extends Thread {
    * In our simulation, there is a one to one mapping of system call to process type.
    * @param type The process type of the requesting process.
    */
-  private void systemCall(ProcessType type) {
+  private void systemCall(int PID) {
+    
+    ProcessType type = pcbList.getPCB(PID).getProcess().getProcessType();
     
     if( type == ProcessType.COMPUTE ) {
       
