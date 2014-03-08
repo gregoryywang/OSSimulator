@@ -34,7 +34,7 @@ public class Simulator {
 		Scheduler scheduler = new Scheduler(schedulerPolicy, pcbList);
 		
 		//Shared Memory
-		SharedMemory memory = new SharedMemory(1, ProdConsumProcesses);
+		SharedMemory memory = new SharedMemory(3, ProdConsumProcesses);
 		
 		//Create CPU object
 		CPU cpu = new CPU(pcbList, memory, scheduler);
