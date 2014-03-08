@@ -7,9 +7,18 @@
  */
 package edu.uw.tcss422.components;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
+import edu.uw.tcss422.types.GenericProcess;
+
 public class IODevice implements Runnable {
+	
+	/**
+	 * A queue of processes waiting for an interrupt for this IODevice.
+	 */
+	private Queue<GenericProcess> waitingProcessess = new LinkedList<GenericProcess>();
 	
 	/**
 	 * Reference to the CPU object to call interrupts to.
@@ -59,6 +68,14 @@ public class IODevice implements Runnable {
 	 */
 	public void setDebugFlag(boolean value) {
 		debugFlag = value;
+	}
+	
+	/**
+	 * Adds a process to the list of processes waiting for the IODevice.
+	 * @param process	The process to add.
+	 */
+	public void addProcess(GenericProcess process) {
+		waitingProcessess.add(process);
 	}
 
 	/**
