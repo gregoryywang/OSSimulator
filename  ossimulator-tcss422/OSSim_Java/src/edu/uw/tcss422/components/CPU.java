@@ -31,6 +31,11 @@ public class CPU extends Thread {
 	 * Interrupted condition variable.
 	 */
 	private boolean bInterrupted = false;
+	
+	/**
+	 * PC counter.
+	 */
+	private int PC = 0;
 
 	public CPU(PCBList pcbList, SharedMemory sharedMemory, Scheduler scheduler) {
 		this.pcbList = pcbList;
@@ -48,8 +53,7 @@ public class CPU extends Thread {
 	@Override
 	public void run() {
 		int triggerPoint = 0;
-		int PC = 0;
-
+		
 		while (bKill) {
 
 			//Get next process to run
