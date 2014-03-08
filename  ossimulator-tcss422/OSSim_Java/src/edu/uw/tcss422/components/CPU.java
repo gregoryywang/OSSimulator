@@ -67,26 +67,28 @@ public class CPU extends Thread {
 
 			//Get current PC
 			PC = pcb.getNextStep();
+			
+			//Process State
+			ProcessState state = ProcessState.READY;
 
 			//Loop through all instructions
 			while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
 
 				if (PC == triggerPoint) {
 					//Make system call based on process type
-					systemCall(PID);
-				} else if (bInterrupted) {
-					// Perform action for hardware interupt
-					// Then change the state of a blocked UIProcess to READY
-					// Seems like the IODevice should have something that can be paired with a UIProcess 
-
-				} else if(scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
-						|| scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY
-						&& PC == GenericProcess.MAX_INSTRUCTIONS - 1){
-					break;
-				}
+					systemCall(PID); 
+					
+					if (pcb.getState() == ProcessState.BLOCKED)
+					  break;
+					
+				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN  ) {
+				    break;		
+				} 
 
 				PC = (PC + 1) % (GenericProcess.MAX_INSTRUCTIONS - 1);
 			}
+			
+			pcb.setNextStep(PC);
 		}
 	}
 
@@ -94,7 +96,11 @@ public class CPU extends Thread {
 	 * This method will be called by IODevices.
 	 */
 	public void IOinterupt() {
-		bInterrupted = true;
+    // Perform action for hardware interupt
+    // Then change the state of a blocked UIProcess to READY
+    // Seems like the IODevice should have something that can be paired with a UIProcess 
+
+	  bInterrupted = true;
 	}
 
 
