@@ -84,7 +84,8 @@ public class CPU extends Thread {
 				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN  ) {
 				    break;		
 				} else if (scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
-				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY) { 
+				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY 
+				    && PC == GenericProcess.MAX_INSTRUCTIONS - 1 ) { 
 				    PC = 0; //Reset PC
 				    break;
 				}
