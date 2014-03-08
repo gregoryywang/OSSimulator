@@ -46,6 +46,14 @@ public class IODevice implements Runnable {
 	}
 	
 	/**
+	 * Returns a string of what device this is.
+	 * @return String deviceType
+	 */
+	public String getDeviceType() {
+		return deviceType;
+	}
+	
+	/**
 	 * Sets debug flag to enable diagnostic messages.
 	 * @param value True/False for debug mode.
 	 */
