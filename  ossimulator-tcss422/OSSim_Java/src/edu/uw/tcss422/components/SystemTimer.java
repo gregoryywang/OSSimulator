@@ -49,13 +49,12 @@ public class SystemTimer {
 		
 		Timer timer = new Timer();
 		
-		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
-		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(delayPeriod));
-		
-		if(debugFlag) {
+		if(debugFlag = true) {
 			System.out.println("System timer delay period is set to " + delayPeriod + " milliseconds.");
 		}
-
+		
+		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
+		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(delayPeriod));
 	}
 	
 	/**
@@ -71,13 +70,12 @@ public class SystemTimer {
 		
 		Timer timer = new Timer();
 		
-		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
-		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(this.delayPeriod));
-		
-		if(debugFlag) {
+		if(debugFlag = true) {
 			System.out.println("System timer delay period is set to " + this.delayPeriod + " milliseconds.");
 		}
-
+		
+		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
+		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(this.delayPeriod));
 	}
 	
 	/**
@@ -107,8 +105,10 @@ public class SystemTimer {
 		 * Calls on the interrupt() method in CPU to generate a interrupt.
 		 */
 		public void run() {
+			
 			// calls interrupt method in CPU
 			//TODO: implement interrupt method
+			
 			if(debugFlag) {
 				System.out.println("Timer has triggered a CPU interrupt.");
 			}
@@ -123,5 +123,14 @@ public class SystemTimer {
 		public boolean stopTimer() {
 			return this.cancel();
 		}
+	}
+	
+	/**
+	 * Test method to verify proper functionality.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SystemTimer time = new SystemTimer(new CPU(null, null, null), 5000, 10000);
+		time.setDebugFlag(true);
 	}
 }
