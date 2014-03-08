@@ -12,16 +12,23 @@ public class PCBList {
 	
 	private HashMap<Integer, ProcessControlBlock> pcbList;
 	
+	// Only ConsumerProcess and UIProcess will be in here.
+	private HashMap<Integer, ProcessControlBlock> mutexMap;
+	
 	public PCBList(int UIprocesses, int calculatingProcesses, int ProdConsumProcesses) {
 		pcbList = new HashMap<Integer, ProcessControlBlock>();
+		mutexMap = new HashMap<Integer, ProcessControlBlock>();
 		int pid = 1; // Usually PID 0 is for scheduler.
 		int mutex = 0; // The memory location that the producer-consumer pair looking at.
 					   // A pair share the same mutex number.
 		
 		for (int i = 0; i < UIprocesses; i++) {
 			GenericProcess ui = new UIProcess();
-			pcbList.put(pid, new ProcessControlBlock(pid, ui));
+			ProcessControlBlock uiPCB = new ProcessControlBlock(pid, ui);
+			pcbList.put(pid, uiPCB);
+			mutexMap.put(mutex, uiPCB);
 			pid++;
+			mutex++;
 		}
 		
 		for (int i = 0; i < calculatingProcesses; i++) {
@@ -39,6 +46,7 @@ public class PCBList {
 			consumerPCB.setMutex(mutex);
 			pcbList.put(producerPCB.getPid(), producerPCB);
 			pcbList.put(consumerPCB.getPid(), consumerPCB);
+			mutexMap.put(consumerPCB.getPid(), consumerPCB);
 			mutex++;
 		}
 		
@@ -57,5 +65,9 @@ public class PCBList {
 	
 	public ProcessControlBlock getPCB(int PID) {
 		return pcbList.get(PID);
+	}
+	
+	public ProcessControlBlock getPCBbyMutex(int mutex) {
+		return mutexMap.get(mutex);
 	}
 }
