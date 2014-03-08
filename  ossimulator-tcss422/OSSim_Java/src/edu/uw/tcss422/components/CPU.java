@@ -68,9 +68,6 @@ public class CPU extends Thread {
 			//Get current PC
 			PC = pcb.getNextStep();
 			
-			//Process State
-			ProcessState state = ProcessState.READY;
-
 			//Loop through all instructions
 			while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
 
