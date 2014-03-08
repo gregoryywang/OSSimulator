@@ -79,14 +79,14 @@ public class IODevice implements Runnable {
 			//TODO: call interrupt method in CPU.
 			
 			if(debugFlag = true) {
-				System.out.println("IODevice generated an interrupt. Delay time = " + delayPeriod +
-						" milliseconds");
+				System.out.println("IODevice " + deviceType + " generated an interrupt. Delay time = " 
+						+ delayPeriod + " milliseconds");
 			}
 		}
 	}
 	
 	/**
-	 * For testing purposes.
+	 * Test method to verify proper functionality.
 	 * @param args
 	 */
 	public static void main(String[] args) {
