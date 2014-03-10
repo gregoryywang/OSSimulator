@@ -98,11 +98,12 @@ public class IODevice implements Runnable {
 			}
 			
 			try {
-				ProcessControlBlock interrupted = waitingProcesses.remove();
+				ProcessControlBlock target = waitingProcesses.remove();
 				if(debugFlag = true) {
-					System.out.println("IODevice " + deviceType + " interrupt targeted PID");
+					System.out.println("IODevice " + deviceType + " interrupt targeted PID " + 
+							target.getPid() + ", " + target.getState() + ", " + target.getPriority());
 				}
-				currentCPU.IOinterupt(interrupted);
+				currentCPU.IOinterupt(target);
 			} catch (NoSuchElementException e) {
 				if(debugFlag = true) {
 					System.out.println("No processes currently waiting for IODevice " + deviceType);
