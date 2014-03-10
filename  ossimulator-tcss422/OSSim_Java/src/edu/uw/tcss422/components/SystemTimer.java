@@ -54,7 +54,7 @@ public class SystemTimer {
 		}
 		
 		// The TimerTask GenerateInterrupts runs in its own thread once scheduled.
-		timer.scheduleAtFixedRate(new TimerInterrupt(), 0, Long.valueOf(delayPeriod));
+		timer.scheduleAtFixedRate(new TimerInterrupt(), Long.valueOf(delayPeriod), Long.valueOf(delayPeriod));
 	}
 	
 	/**
