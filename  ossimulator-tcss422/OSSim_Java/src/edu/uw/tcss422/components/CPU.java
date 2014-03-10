@@ -96,15 +96,21 @@ public class CPU extends Thread {
 
 	/**
 	 * This method will be called by IODevices.
+	 * Pass in the last item from your list.
 	 */
-	public void IOinterupt() {
+	public void IOinterupt(ProcessControlBlock pcb) {
     // Perform action for hardware interupt
     // Then change the state of a blocked UIProcess to READY
-    // Seems like the IODevice should have something that can be paired with a UIProcess 
-
-	  bInterrupted = true;
+ 
+		pcb.setState(ProcessState.READY);
 	}
 
+	/**
+	 * This method will be called by System Timer.
+	 */
+	public void timerInterupt() {
+		  bInterrupted = true;
+	}
 
 
 	/**
@@ -130,7 +136,8 @@ public class CPU extends Thread {
 		} else if( type == ProcessType.UI ) {
 			// Request resource from IODevice. Do we use the sharedMemory or other mechanism?
 			// I'm assuming that we are using the sharedMemory here
-			requestResource(pcb);
+//			requestResource(pcb); 
+			// TODO Where can I get the IO device? 
 		}
 	}
 
@@ -141,6 +148,7 @@ public class CPU extends Thread {
 		if (sharedMemory.isEmpty(pcb.getMutex())) {
 			// resource not available
 			pcb.setState(ProcessState.BLOCKED);
+			pcb.setNextStep(PC);
 		} else {
 			// resource available
 			pcb.setState(ProcessState.RUNNING);
