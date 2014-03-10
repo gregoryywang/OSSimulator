@@ -8,17 +8,16 @@
 package edu.uw.tcss422.components;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Random;
-
-import edu.uw.tcss422.types.GenericProcess;
 
 public class IODevice implements Runnable {
 	
 	/**
 	 * A queue of processes waiting for an interrupt for this IODevice.
 	 */
-	private Queue<GenericProcess> waitingProcessess = new LinkedList<GenericProcess>();
+	private Queue<ProcessControlBlock> waitingProcesses = new LinkedList<ProcessControlBlock>();
 	
 	/**
 	 * Reference to the CPU object to call interrupts to.
@@ -71,11 +70,11 @@ public class IODevice implements Runnable {
 	}
 	
 	/**
-	 * Adds a process to the list of processes waiting for the IODevice.
-	 * @param process	The process to add.
+	 * Adds a PCB to the list of processes waiting for the IODevice.
+	 * @param input	The PCB to add.
 	 */
-	public void addProcess(GenericProcess process) {
-		waitingProcessess.add(process);
+	public void addPCB(ProcessControlBlock input) {
+		waitingProcesses.add(input);
 	}
 
 	/**
@@ -93,11 +92,21 @@ public class IODevice implements Runnable {
 				e.printStackTrace();
 			}
 			
-			//TODO: call interrupt method in CPU.
-			
 			if(debugFlag = true) {
 				System.out.println("IODevice " + deviceType + " generated an interrupt. Delay time = " 
 						+ delayPeriod + " milliseconds");
+			}
+			
+			try {
+				ProcessControlBlock interrupted = waitingProcesses.remove();
+				if(debugFlag = true) {
+					System.out.println("IODevice " + deviceType + " interrupt targeted PID");
+				}
+				currentCPU.IOinterupt(interrupted);
+			} catch (NoSuchElementException e) {
+				if(debugFlag = true) {
+					System.out.println("No processes currently waiting for IODevice " + deviceType);
+				}
 			}
 		}
 	}
