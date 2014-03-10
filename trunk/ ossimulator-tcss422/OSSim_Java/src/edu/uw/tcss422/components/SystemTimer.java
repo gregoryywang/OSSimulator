@@ -106,8 +106,7 @@ public class SystemTimer {
 		 */
 		public void run() {
 			
-			// calls interrupt method in CPU
-			//TODO: implement interrupt method
+			currentCPU.timerInterupt();
 			
 			if(debugFlag) {
 				System.out.println("Timer has triggered a CPU interrupt.");
