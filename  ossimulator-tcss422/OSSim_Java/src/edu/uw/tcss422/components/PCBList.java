@@ -1,6 +1,7 @@
 package edu.uw.tcss422.components;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import process.ComputeProcess;
 import process.ConsumerProcess;
@@ -11,6 +12,13 @@ import edu.uw.tcss422.types.GenericProcess;
 public class PCBList {
 	
 	private HashMap<Integer, ProcessControlBlock> pcbList;
+	
+	private Random random = new Random();
+	
+	private static int HIGHEST_PRIORITY = 0;
+	
+	private static int LOWEST_PRIORITY = 9;
+	
 	
 	// Only ConsumerProcess and UIProcess will be in here.
 	private HashMap<Integer, ProcessControlBlock> mutexMap;
@@ -25,6 +33,7 @@ public class PCBList {
 		for (int i = 0; i < UIprocesses; i++) {
 			GenericProcess ui = new UIProcess();
 			ProcessControlBlock uiPCB = new ProcessControlBlock(pid, ui);
+			setRandomPriority(uiPCB);
 			pcbList.put(pid, uiPCB);
 			mutexMap.put(mutex, uiPCB);
 			pid++;
@@ -33,7 +42,9 @@ public class PCBList {
 		
 		for (int i = 0; i < calculatingProcesses; i++) {
 			GenericProcess compute = new ComputeProcess();
-			pcbList.put(pid, new ProcessControlBlock(pid, compute));
+			ProcessControlBlock cPCB = new ProcessControlBlock(pid, compute);
+			setRandomPriority(cPCB);
+			pcbList.put(pid, cPCB);
 			pid++;
 		}
 		
@@ -44,6 +55,8 @@ public class PCBList {
 			ProcessControlBlock consumerPCB = new ProcessControlBlock(pid++, consumer);
 			producerPCB.setMutex(mutex);
 			consumerPCB.setMutex(mutex);
+			setRandomPriority(producerPCB);
+			setRandomPriority(consumerPCB);
 			pcbList.put(producerPCB.getPid(), producerPCB);
 			pcbList.put(consumerPCB.getPid(), consumerPCB);
 			mutexMap.put(consumerPCB.getPid(), consumerPCB);
@@ -69,5 +82,9 @@ public class PCBList {
 	
 	public ProcessControlBlock getPCBbyMutex(int mutex) {
 		return mutexMap.get(mutex);
+	}
+	
+	private void setRandomPriority(ProcessControlBlock pcb) {
+		pcb.setPriority(random.nextInt(LOWEST_PRIORITY));
 	}
 }
