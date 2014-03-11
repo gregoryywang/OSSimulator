@@ -39,6 +39,7 @@ public class CPU extends Thread {
 	
 	/**
 	 * Collection of IO Devices available to CPU. 
+	 * 0: keyboard; 1: disk;
 	 */
 	private IODevice[] devices;
 
@@ -132,7 +133,9 @@ public class CPU extends Thread {
 		ProcessType type = pcb.getProcess().getProcessType();
 
 		if( type == ProcessType.COMPUTE ) {
-			// It does nothing
+			// I thought it does nothing, but in the sample run it made system call to auxiliary.
+			devices[1].addPCB(pcb);
+			blockPCB(pcb);
 		} else if( type == ProcessType.CONSUMER ) {
 			// request resource
 			requestResource(pcb);
@@ -142,10 +145,9 @@ public class CPU extends Thread {
 		} else if( type == ProcessType.IDLE ) {
 			// It does nothing
 		} else if( type == ProcessType.UI ) {
-			// Request resource from IODevice. Do we use the sharedMemory or other mechanism?
-			// I'm assuming that we are using the sharedMemory here
-//			requestResource(pcb); 
-			// TODO Where can I get the IO device? 
+			// Request resource from IODevice by adding itself to the list in the device.
+			devices[0].addPCB(pcb);
+			blockPCB(pcb);
 		}
 	}
 
@@ -155,8 +157,7 @@ public class CPU extends Thread {
 	private void requestResource(ProcessControlBlock pcb) {
 		if (sharedMemory.isEmpty(pcb.getMutex())) {
 			// resource not available
-			pcb.setState(ProcessState.BLOCKED);
-			pcb.setNextStep(PC);
+			blockPCB(pcb);
 		} else {
 			// resource available
 			pcb.setState(ProcessState.RUNNING);
@@ -171,5 +172,10 @@ public class CPU extends Thread {
 			// Seems like it has to update the consumer from BLOCKED to READY
 			pcbList.getPCBbyMutex(mutex).setState(ProcessState.READY);
 		}
+	}
+	
+	private void blockPCB(ProcessControlBlock pcb) {
+		pcb.setState(ProcessState.BLOCKED);
+		pcb.setNextStep(PC);
 	}
 }
