@@ -3,6 +3,7 @@ package edu.uw.tcss422.navigation;
 import java.util.Scanner;
 
 import edu.uw.tcss422.components.CPU;
+import edu.uw.tcss422.components.IODevice;
 import edu.uw.tcss422.components.PCBList;
 import edu.uw.tcss422.components.Scheduler;
 import edu.uw.tcss422.components.SharedMemory;
@@ -39,13 +40,26 @@ public class Simulator {
 		//Create CPU object
 		CPU cpu = new CPU(pcbList, memory, scheduler);
 		cpu.start();
+		
+		//Create IO Devices
+		IODevice[] ioDevices = new IODevice[]{ new IODevice(cpu, "Keyboard", 10, 30),
+		                             new IODevice(cpu, "Disk", 10, 30) };
+		
+		//Set IO Devices References in CPU
+		cpu.setIODevices(ioDevices);
+		
+		//Start IO Devices
+		ioDevices[0].start();
+		ioDevices[1].start();
+		
 		try {
 			cpu.join();
+			ioDevices[0].join();
+	    ioDevices[1].join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
 	}
-
 }
