@@ -36,6 +36,11 @@ public class CPU extends Thread {
 	 * PC counter.
 	 */
 	private int PC = 0;
+	
+	/**
+	 * Collection of IO Devices available to CPU. 
+	 */
+	private IODevice[] devices;
 
 	public CPU(PCBList pcbList, SharedMemory sharedMemory, Scheduler scheduler) {
 		this.pcbList = pcbList;
@@ -112,7 +117,10 @@ public class CPU extends Thread {
 		  bInterrupted = true;
 	}
 
-
+	public void setIODevices(IODevice[] devices) {
+	  this.devices = devices; 
+	}
+	
 	/**
 	 * Helper method that dispatches system calls based on process type.
 	 * In our simulation, there is a one to one mapping of system call to process type.

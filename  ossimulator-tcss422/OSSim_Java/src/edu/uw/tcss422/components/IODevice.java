@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Random;
 
-public class IODevice implements Runnable {
+public class IODevice extends Thread {
 	
 	/**
 	 * A queue of processes waiting for an interrupt for this IODevice.
