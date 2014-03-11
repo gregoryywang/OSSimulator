@@ -37,7 +37,7 @@ public class IODevice extends Thread {
 	/**
 	 * Displays debugging information when set.
 	 */
-	private boolean debugFlag = false;
+	private boolean debugFlag = true;
 	
 	/**
 	 * Constructor for each IODevice
