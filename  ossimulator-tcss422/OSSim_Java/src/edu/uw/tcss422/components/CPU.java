@@ -167,7 +167,7 @@ public class CPU extends Thread {
 
 	private void putResource(ProcessControlBlock pcb) {
 		int mutex = pcb.getMutex();
-		if (!sharedMemory.isEmpty(pcb.getMutex())) {
+		if (!sharedMemory.isEmpty(mutex)) {
 			sharedMemory.push(mutex, 1); // 1 represents dummy data
 			// Seems like it has to update the consumer from BLOCKED to READY
 			pcbList.getPCBbyMutex(mutex).setState(ProcessState.READY);

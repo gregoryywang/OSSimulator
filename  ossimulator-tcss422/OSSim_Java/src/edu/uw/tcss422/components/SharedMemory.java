@@ -12,9 +12,9 @@ public class SharedMemory {
 	
 	@SuppressWarnings("unchecked")
 	public SharedMemory(int capacity, int numberOfPairs) {
-		myMemory = (ArrayBlockingQueue<Integer>[]) new ArrayBlockingQueue<?>[numberOfPairs];
+		myMemory = (ArrayBlockingQueue<Integer>[]) new ArrayBlockingQueue<?>[numberOfPairs + 1];
 		
-		for (int i = 0; i < numberOfPairs; i++) {
+		for (int i = 0; i <= numberOfPairs; i++) {
 			myMemory[i] = new ArrayBlockingQueue<Integer>(capacity);
 		}
 	}
