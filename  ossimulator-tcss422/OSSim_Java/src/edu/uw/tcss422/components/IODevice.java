@@ -73,7 +73,7 @@ public class IODevice extends Thread {
 	 * Adds a PCB to the list of processes waiting for the IODevice.
 	 * @param input	The PCB to add.
 	 */
-	public void addPCB(ProcessControlBlock input) {
+	public synchronized void addPCB(ProcessControlBlock input) {
 		waitingProcesses.add(input);
 	}
 
@@ -94,7 +94,7 @@ public class IODevice extends Thread {
 			
 			if(debugFlag == true) {
 				System.out.println("IODevice " + deviceType + " generated an interrupt. Delay time = " 
-						+ delayPeriod + " milliseconds");
+						+ delayPeriod + " milliseconds.");
 			}
 			
 			try {
