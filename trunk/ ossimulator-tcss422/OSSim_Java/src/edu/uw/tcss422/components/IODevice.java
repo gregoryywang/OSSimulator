@@ -92,20 +92,20 @@ public class IODevice extends Thread {
 				e.printStackTrace();
 			}
 			
-			if(debugFlag = true) {
+			if(debugFlag == true) {
 				System.out.println("IODevice " + deviceType + " generated an interrupt. Delay time = " 
 						+ delayPeriod + " milliseconds");
 			}
 			
 			try {
 				ProcessControlBlock target = waitingProcesses.remove();
-				if(debugFlag = true) {
+				if(debugFlag == true) {
 					System.out.println("IODevice " + deviceType + " interrupt targeted PID " + 
 							target.getPid() + ", " + target.getState() + ", " + target.getPriority());
 				}
 				currentCPU.IOinterupt(target);
 			} catch (NoSuchElementException e) {
-				if(debugFlag = true) {
+				if(debugFlag == true) {
 					System.out.println("No processes currently waiting for IODevice " + deviceType);
 				}
 			}
@@ -116,10 +116,12 @@ public class IODevice extends Thread {
 	 * Test method to verify proper functionality.
 	 * @param args
 	 */
+
 	public static void main(String[] args) {
 		IODevice main = new IODevice(new CPU(null, null, null), "Disk", 1000, 5000);
-		main.setDebugFlag(true);
+		main.setDebugFlag(false);
 		new Thread(main).start();
 	}
+
 	
 }
