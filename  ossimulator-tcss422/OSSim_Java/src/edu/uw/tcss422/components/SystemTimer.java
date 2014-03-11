@@ -21,7 +21,7 @@ public class SystemTimer {
 	/**
 	 * Displays debugging information when set.
 	 */
-	private boolean debugFlag = false;
+	private boolean debugFlag = true;
 	
 	/**
 	 * The delay period between interrupts. Can either be set manually or randomly generated.
