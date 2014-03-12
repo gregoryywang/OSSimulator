@@ -74,7 +74,7 @@ public class CPU extends Thread {
 			//Get current PC
 			PC = pcb.getNextStep();
 			
-			System.out.println("CPU now running Process ID " + pcb.getPid());
+			System.out.println("CPU now running Process ID " + pcb.getPid() + ": " + pcb.getState());
 			
 			//Loop through all instructions
 			while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
@@ -90,6 +90,7 @@ public class CPU extends Thread {
 					
 				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN) {
 					System.out.println("Process " + pcb.getPid() + " was interrupted");
+					bInterrupted = false;
 				    break;		
 				} else if (scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
 				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY 
