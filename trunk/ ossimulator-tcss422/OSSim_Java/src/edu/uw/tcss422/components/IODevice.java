@@ -120,7 +120,6 @@ public class IODevice extends Thread {
 
 	public static void main(String[] args) {
 		IODevice main = new IODevice(new CPU(null, null, null), "Disk", 1000, 5000);
-		main.setDebugFlag(false);
 		new Thread(main).start();
 	}
 

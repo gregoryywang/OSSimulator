@@ -130,6 +130,5 @@ public class SystemTimer {
 	 */
 	public static void main(String[] args) {
 		SystemTimer time = new SystemTimer(new CPU(null, null, null), 5000, 10000);
-		time.setDebugFlag(true);
 	}
 }
