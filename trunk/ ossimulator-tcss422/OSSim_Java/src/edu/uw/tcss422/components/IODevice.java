@@ -100,8 +100,9 @@ public class IODevice extends Thread {
 			try {
 				ProcessControlBlock target = waitingProcesses.remove();
 				if(debugFlag == true) {
-					System.out.println("IODevice " + deviceType + " interrupt targeted PID " + 
-							target.getPid() + ", " + target.getState() + ", " + target.getPriority());
+					System.out.println("IODevice " + deviceType + " interrupt targeted process PID " + 
+							target.getPid() + ", state = " + target.getState() + ", priority = " 
+							+ target.getPriority());
 				}
 				currentCPU.IOinterupt(target);
 			} catch (NoSuchElementException e) {
