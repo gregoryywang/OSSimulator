@@ -74,6 +74,8 @@ public class CPU extends Thread {
 			//Get current PC
 			PC = pcb.getNextStep();
 			
+			System.out.println("CPU now running Process ID " + pcb.getPid());
+			
 			//Loop through all instructions
 			while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
 
@@ -81,15 +83,19 @@ public class CPU extends Thread {
 					//Make system call based on process type
 					systemCall(PID); 
 					
-					if (pcb.getState() == ProcessState.BLOCKED)
-					  break;
+					if (pcb.getState() == ProcessState.BLOCKED) {
+						System.out.println("Process " + pcb.getPid() + " is now BLOCKED. Switching processes");
+						break;
+					}
 					
-				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN  ) {
+				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN) {
+					System.out.println("Process " + pcb.getPid() + " was interrupted");
 				    break;		
 				} else if (scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
 				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY 
 				    && PC == GenericProcess.MAX_INSTRUCTIONS - 1 ) { 
 				    PC = 0; //Reset PC
+				    System.out.println("Process " + pcb.getPid() + " completed");
 				    break;
 				}
 
@@ -105,10 +111,11 @@ public class CPU extends Thread {
 	 * Pass in the last item from your list.
 	 */
 	public void IOinterupt(ProcessControlBlock pcb) {
-    // Perform action for hardware interupt
+    // Perform action for hardware interrupt
     // Then change the state of a blocked UIProcess to READY
  
 		pcb.setState(ProcessState.READY);
+		System.out.println("IO interrupt occurred. Process " + pcb.getPid() + " UNBLOCKED");
 	}
 
 	/**
@@ -131,6 +138,8 @@ public class CPU extends Thread {
 		ProcessControlBlock pcb = pcbList.getPCB(PID);
 
 		ProcessType type = pcb.getProcess().getProcessType();
+		
+		System.out.println("System call occured. Process " + pcb.getPid() + " is a " + type.name());
 
 		if( type == ProcessType.COMPUTE ) {
 			// I thought it does nothing, but in the sample run it made system call to auxiliary.
@@ -155,13 +164,15 @@ public class CPU extends Thread {
 	 * The system call to request a resource from shared memory.
 	 */
 	private void requestResource(ProcessControlBlock pcb) {
-		if (sharedMemory.isEmpty(pcb.getMutex())) {
+		int mutex = pcb.getMutex();
+		if (sharedMemory.isEmpty(mutex)) {
 			// resource not available
 			blockPCB(pcb);
 		} else {
 			// resource available
 			pcb.setState(ProcessState.RUNNING);
 			sharedMemory.pop(pcb.getMutex());
+			System.out.println("Value taken from memory location " + mutex);
 		}
 	}
 
@@ -169,6 +180,7 @@ public class CPU extends Thread {
 		int mutex = pcb.getMutex();
 		if (!sharedMemory.isEmpty(mutex)) {
 			sharedMemory.push(mutex, 1); // 1 represents dummy data
+			System.out.println("Value added to memory location " + mutex);
 			// Seems like it has to update the consumer from BLOCKED to READY
 			pcbList.getPCBbyMutex(mutex).setState(ProcessState.READY);
 		}
@@ -177,5 +189,6 @@ public class CPU extends Thread {
 	private void blockPCB(ProcessControlBlock pcb) {
 		pcb.setState(ProcessState.BLOCKED);
 		pcb.setNextStep(PC);
+		System.out.println("Process " + pcb.getPid() + " BLOCKED");
 	}
 }

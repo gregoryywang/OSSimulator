@@ -35,9 +35,9 @@ public class PCBList {
 			ProcessControlBlock uiPCB = new ProcessControlBlock(pid, ui);
 			setRandomPriority(uiPCB);
 			pcbList.put(pid, uiPCB);
-			mutexMap.put(mutex, uiPCB);
+			//mutexMap.put(mutex, uiPCB);
 			pid++;
-			mutex++;
+			//mutex++;
 		}
 		
 		for (int i = 0; i < calculatingProcesses; i++) {
