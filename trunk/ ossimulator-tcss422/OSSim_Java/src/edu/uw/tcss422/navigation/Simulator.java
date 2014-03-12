@@ -40,7 +40,6 @@ public class Simulator {
 		
 		//Create CPU object
 		CPU cpu = new CPU(pcbList, memory, scheduler);
-		cpu.start();
 		
 		//Create IO Devices
 		IODevice[] ioDevices = new IODevice[]{ new IODevice(cpu, "Keyboard", 10, 30),
@@ -55,6 +54,9 @@ public class Simulator {
 		//Start IO Devices
 		ioDevices[0].start();
 		ioDevices[1].start();
+		
+		//Start CPU
+		cpu.start();
 		
 		try {
 			cpu.join();
