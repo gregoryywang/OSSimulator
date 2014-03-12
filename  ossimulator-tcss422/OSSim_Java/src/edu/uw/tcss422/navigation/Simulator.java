@@ -7,6 +7,7 @@ import edu.uw.tcss422.components.IODevice;
 import edu.uw.tcss422.components.PCBList;
 import edu.uw.tcss422.components.Scheduler;
 import edu.uw.tcss422.components.SharedMemory;
+import edu.uw.tcss422.components.SystemTimer;
 
 public class Simulator {
 
@@ -44,6 +45,9 @@ public class Simulator {
 		//Create IO Devices
 		IODevice[] ioDevices = new IODevice[]{ new IODevice(cpu, "Keyboard", 10, 30),
 		                             new IODevice(cpu, "Disk", 10, 30) };
+		
+		//Create System Timer
+		SystemTimer timer = new SystemTimer(cpu, 10);
 		
 		//Set IO Devices References in CPU
 		cpu.setIODevices(ioDevices);
