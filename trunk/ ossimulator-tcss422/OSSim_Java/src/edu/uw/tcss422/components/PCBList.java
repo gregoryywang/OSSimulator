@@ -15,8 +15,6 @@ public class PCBList {
 	
 	private Random random = new Random();
 	
-	private static int HIGHEST_PRIORITY = 0;
-	
 	private static int LOWEST_PRIORITY = 9;
 	
 	
@@ -28,7 +26,7 @@ public class PCBList {
 		pcbList = new HashMap<Integer, ProcessControlBlock>();
 		prodMutexMap = new HashMap<Integer, ProcessControlBlock>();
 		conMutexMap = new HashMap<Integer, ProcessControlBlock>();
-		int pid = 1; // Usually PID 0 is for scheduler.
+		int pid = 0; // Usually PID 0 is for scheduler.
 		int mutex = 0; // The memory location that the producer-consumer pair looking at.
 					   // A pair share the same mutex number.
 		
@@ -37,9 +35,7 @@ public class PCBList {
 			ProcessControlBlock uiPCB = new ProcessControlBlock(pid, ui);
 			setRandomPriority(uiPCB);
 			pcbList.put(pid, uiPCB);
-			//mutexMap.put(mutex, uiPCB);
 			pid++;
-			//mutex++;
 		}
 		
 		for (int i = 0; i < calculatingProcesses; i++) {
@@ -61,8 +57,8 @@ public class PCBList {
 			setRandomPriority(consumerPCB);
 			pcbList.put(producerPCB.getPid(), producerPCB);
 			pcbList.put(consumerPCB.getPid(), consumerPCB);
-			prodMutexMap.put(producerPCB.getPid(), producerPCB);
-			conMutexMap.put(consumerPCB.getPid(), consumerPCB);
+			prodMutexMap.put(producerPCB.getMutex(), producerPCB);
+			conMutexMap.put(consumerPCB.getMutex(), consumerPCB);
 			mutex++;
 		}
 		
