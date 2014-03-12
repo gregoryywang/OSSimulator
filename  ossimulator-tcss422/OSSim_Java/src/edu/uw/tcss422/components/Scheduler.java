@@ -66,7 +66,7 @@ public class Scheduler {
 		// currentPID will get back to zero (because of mod operator) if no process is running.
 		// Added second condition to prevent infinite loop.
 		
-		int nextPID = currentPID++;
+		int nextPID = currentPID++ % size;
 		
 		while (pcbList.getPCBList().get(nextPID).getState() == ProcessState.BLOCKED) {
 			nextPID = ++nextPID % size;
