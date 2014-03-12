@@ -173,17 +173,22 @@ public class CPU extends Thread {
 			// resource available
 			pcb.setState(ProcessState.RUNNING);
 			sharedMemory.pop(pcb.getMutex());
+			pcbList.getprodPCBbyMutex(mutex).setState(ProcessState.READY);
 			System.out.println("Value taken from memory location " + mutex);
 		}
 	}
 
 	private void putResource(ProcessControlBlock pcb) {
 		int mutex = pcb.getMutex();
-		if (!sharedMemory.isEmpty(mutex)) {
-			sharedMemory.push(mutex, 1); // 1 represents dummy data
+		boolean success = sharedMemory.push(mutex, 1); // 1 represents dummy data
+		if (success) {
 			System.out.println("Value added to memory location " + mutex);
-			// Seems like it has to update the consumer from BLOCKED to READY
-			pcbList.getPCBbyMutex(mutex).setState(ProcessState.READY);
+			// Seems like it has to update the consumer from BLOCKED to
+			// READY
+			pcbList.getconPCBbyMutex(mutex).setState(ProcessState.READY);
+		} else {
+			blockPCB(pcb);
+
 		}
 	}
 	
