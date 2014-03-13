@@ -46,6 +46,7 @@ public class Simulator {
 		                             new IODevice(cpu, "Disk", 10, 30) };
 		
 		//Create System Timer
+		@SuppressWarnings("unused")
 		SystemTimer timer = new SystemTimer(cpu, 10);
 		
 		//Set IO Devices References in CPU
@@ -61,7 +62,7 @@ public class Simulator {
 		try {
 			cpu.join();
 			ioDevices[0].join();
-	    ioDevices[1].join();
+			ioDevices[1].join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

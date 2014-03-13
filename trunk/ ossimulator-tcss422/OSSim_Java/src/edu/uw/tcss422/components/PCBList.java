@@ -92,7 +92,7 @@ public class PCBList {
 	  int listSize = pcbList.size();
 	  StringBuilder output = new StringBuilder();
 	  
-	  for(int i = 0; i < listSize - 1; i++) {
+	  for(int i = 0; i < listSize; i++) {
 	    ProcessControlBlock pcb = pcbList.get(i);
 	    output.append("\t");
 	    output.append("Process " + i + " (" + pcb.getProcess().getProcessType() + ")'s state: " + pcb.getState() + "\n" );
