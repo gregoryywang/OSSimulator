@@ -87,6 +87,20 @@ public class PCBList {
 		return conMutexMap.get(mutex);
 	}
 	
+	@Override 
+	public String toString() {
+	  int listSize = pcbList.size();
+	  StringBuilder output = new StringBuilder();
+	  
+	  for(int i = 0; i < listSize - 1; i++) {
+	    ProcessControlBlock pcb = pcbList.get(i);
+	    output.append("\t");
+	    output.append("Process " + i + " (" + pcb.getProcess().getProcessType() + ")'s state: " + pcb.getState() + "\n" );
+	  }
+	  
+	  return output.toString();
+	}
+	
 	private void setRandomPriority(ProcessControlBlock pcb) {
 		pcb.setPriority(random.nextInt(LOWEST_PRIORITY));
 	}

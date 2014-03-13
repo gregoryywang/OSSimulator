@@ -74,17 +74,19 @@ public class CPU extends Thread {
 			//Get current PC
 			PC = pcb.getNextStep();
 			
-			System.out.println("CPU now running Process ID " + pcb.getPid() + ": " + pcb.getState());
-			
+			//Print output of process state
+			System.out.println("Scheduler: Running process " + pcb.getPid() + " (" + pcb.getProcess().getProcessType() + ") next.");
+			System.out.println(pcbList.toString());
+				
 			//Loop through all instructions
 			while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
-
+			  
 				if (PC == triggerPoint) {
 					//Make system call based on process type
 					systemCall(PID); 
 					
 					if (pcb.getState() == ProcessState.BLOCKED) {
-						System.out.println("Process " + pcb.getPid() + " is now BLOCKED. Switching processes");
+						//System.out.println("Process " + pcb.getPid() + " is now BLOCKED. Switching processes");
 						break;
 					}
 					
@@ -96,11 +98,12 @@ public class CPU extends Thread {
 				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY 
 				    && PC == GenericProcess.MAX_INSTRUCTIONS - 1 ) { 
 				    PC = 0; //Reset PC
-				    System.out.println("Process " + pcb.getPid() + " completed");
+				    //System.out.println("Process " + pcb.getPid() + " completed");
 				    break;
 				}
 
 				PC = (PC + 1) % (GenericProcess.MAX_INSTRUCTIONS - 1);
+				
 			}
 			
 			pcb.setNextStep(PC);
@@ -116,7 +119,7 @@ public class CPU extends Thread {
     // Then change the state of a blocked UIProcess to READY
  
 		pcb.setState(ProcessState.READY);
-		System.out.println("IO interrupt occurred. Process " + pcb.getPid() + " UNBLOCKED");
+		//System.out.println("IO interrupt occurred. Process " + pcb.getPid() + " UNBLOCKED");
 	}
 
 	/**
@@ -140,7 +143,7 @@ public class CPU extends Thread {
 
 		ProcessType type = pcb.getProcess().getProcessType();
 		
-		System.out.println("System call occured. Process " + pcb.getPid() + " is a " + type.name());
+		//System.out.println("System call occured. Process " + pcb.getPid() + " is a " + type.name());
 
 		if( type == ProcessType.COMPUTE ) {
 			// I thought it does nothing, but in the sample run it made system call to auxiliary.
@@ -174,7 +177,7 @@ public class CPU extends Thread {
 			pcb.setState(ProcessState.RUNNING);
 			sharedMemory.pop(pcb.getMutex());
 			pcbList.getprodPCBbyMutex(mutex).setState(ProcessState.READY);
-			System.out.println("Value taken from memory location " + mutex);
+			//System.out.println("Value taken from memory location " + mutex);
 		}
 	}
 
@@ -182,7 +185,7 @@ public class CPU extends Thread {
 		int mutex = pcb.getMutex();
 		boolean success = sharedMemory.push(mutex, 1); // 1 represents dummy data
 		if (success) {
-			System.out.println("Value added to memory location " + mutex);
+			//System.out.println("Value added to memory location " + mutex);
 			// Seems like it has to update the consumer from BLOCKED to
 			// READY
 			pcbList.getconPCBbyMutex(mutex).setState(ProcessState.READY);
@@ -195,6 +198,6 @@ public class CPU extends Thread {
 	private void blockPCB(ProcessControlBlock pcb) {
 		pcb.setState(ProcessState.BLOCKED);
 		pcb.setNextStep(PC);
-		System.out.println("Process " + pcb.getPid() + " BLOCKED");
+		//System.out.println("Process " + pcb.getPid() + " BLOCKED");
 	}
 }
