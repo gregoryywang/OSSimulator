@@ -109,7 +109,7 @@ public class SystemTimer {
 			currentCPU.timerInterupt();
 			
 			if(debugFlag) {
-				System.out.println("Timer has triggered a CPU interrupt.");
+				System.out.println("System timer has triggered a CPU interrupt.");
 			}
 		}
 		
