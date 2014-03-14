@@ -43,7 +43,7 @@ public class ProcessControlBlock {
 	public ProcessControlBlock(int pid, GenericProcess process) {
 		this.pid = pid;
 		this.nextStep = 0;
-		this.state = ProcessState.READY;
+		this.state = ProcessState.RUNNABLE;
 		this.process = process;
 	}
 	
