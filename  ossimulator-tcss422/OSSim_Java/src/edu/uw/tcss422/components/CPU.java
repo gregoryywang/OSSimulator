@@ -79,7 +79,7 @@ public class CPU extends Thread {
 			
 			//Print output of process state
 			System.out.println("Scheduler: Running process " + pcb.getPid() + " (" + pcb.getProcess().getProcessType() + ") next.");
-			System.out.println(pcbList.toString());
+			System.out.print(pcbList.toString());
 				
 			//Loop through all instructions
 			while(PC != GenericProcess.MAX_INSTRUCTIONS - 1) {
@@ -148,7 +148,7 @@ public class CPU extends Thread {
 
 		ProcessType type = pcb.getProcess().getProcessType();
 		
-		//System.out.println("System call occured. Process " + pcb.getPid() + " is a " + type.name());
+		System.out.println("Process " + pcb.getPid() + " (" + type.name() + ") made a system call.");
 
 		if( type == ProcessType.COMPUTE ) {
 			// I thought it does nothing, but in the sample run it made system call to auxiliary.
@@ -160,8 +160,6 @@ public class CPU extends Thread {
 		} else if( type == ProcessType.PRODUCER ) {
 			// I think it always try to put stuff in the memory.
 			putResource(pcb);
-		} else if( type == ProcessType.IDLE ) {
-			// It does nothing
 		} else if( type == ProcessType.UI ) {
 			// Request resource from IODevice by adding itself to the list in the device.
 			devices[0].addPCB(pcb);
