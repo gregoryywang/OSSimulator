@@ -14,6 +14,8 @@ public class Scheduler {
 	
 	private PCBList pcbList;
 	
+	private int currentPID = 0;
+	
 	public Scheduler(int scheduleInt, PCBList pcbList) {
 	  this.pcbList = pcbList;
 	  
@@ -59,7 +61,6 @@ public class Scheduler {
 	 */
 	private int roundRobin() {
 		int size = pcbList.getPCBList().size();
-		int currentPID = 0;
 		do {
 			currentPID = ++currentPID % size;
 		} while (pcbList.getPCBList().get(currentPID).getState() == ProcessState.RUNNING && currentPID != 0);
