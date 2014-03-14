@@ -42,8 +42,8 @@ public class Simulator {
 		CPU cpu = new CPU(pcbList, memory, scheduler);
 		
 		//Create IO Devices
-		IODevice[] ioDevices = new IODevice[]{ new IODevice(cpu, "Keyboard", 10, 30),
-		                             new IODevice(cpu, "Disk", 10, 30) };
+		IODevice[] ioDevices = new IODevice[]{ new IODevice(cpu, "Keyboard", 10, 20),
+		                             new IODevice(cpu, "Disk", 5, 10) };
 		
 		//Create System Timer
 		@SuppressWarnings("unused")
