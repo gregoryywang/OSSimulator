@@ -74,6 +74,9 @@ public class CPU extends Thread {
 			//Get current PC
 			PC = pcb.getNextStep();
 			
+			//Set current process to running state
+			pcb.setState(ProcessState.RUNNING);
+			
 			//Print output of process state
 			System.out.println("Scheduler: Running process " + pcb.getPid() + " (" + pcb.getProcess().getProcessType() + ") next.");
 			System.out.println(pcbList.toString());
@@ -93,11 +96,13 @@ public class CPU extends Thread {
 				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN) {
 					System.out.println("Process " + pcb.getPid() + " was interrupted");
 					bInterrupted = false;
-				    break;		
+					pcb.setState(ProcessState.READY);
+				  break;		
 				} else if (scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
 				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY 
 				    && PC == GenericProcess.MAX_INSTRUCTIONS - 1 ) { 
 				    PC = 0; //Reset PC
+				    pcb.setState(ProcessState.READY);
 				    //System.out.println("Process " + pcb.getPid() + " completed");
 				    break;
 				}
