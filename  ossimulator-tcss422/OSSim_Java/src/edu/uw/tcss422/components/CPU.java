@@ -96,13 +96,13 @@ public class CPU extends Thread {
 				} else if (bInterrupted && scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.ROUND_ROBIN) {
 					System.out.println("Process " + pcb.getPid() + " was interrupted");
 					bInterrupted = false;
-					pcb.setState(ProcessState.READY);
+					pcb.setState(ProcessState.RUNNABLE);
 				  break;		
 				} else if (scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.LOTTERY 
 				    || scheduler.getCurrentSchedulerPolicy() == SchedulePolicy.PRIORITY 
 				    && PC == GenericProcess.MAX_INSTRUCTIONS - 1 ) { 
 				    PC = 0; //Reset PC
-				    pcb.setState(ProcessState.READY);
+				    pcb.setState(ProcessState.RUNNABLE);
 				    //System.out.println("Process " + pcb.getPid() + " completed");
 				    break;
 				}
@@ -123,7 +123,7 @@ public class CPU extends Thread {
     // Perform action for hardware interrupt
     // Then change the state of a blocked UIProcess to READY
  
-		pcb.setState(ProcessState.READY);
+		pcb.setState(ProcessState.RUNNABLE);
 		//System.out.println("IO interrupt occurred. Process " + pcb.getPid() + " UNBLOCKED");
 	}
 
@@ -181,7 +181,7 @@ public class CPU extends Thread {
 			// resource available
 			pcb.setState(ProcessState.RUNNING);
 			sharedMemory.pop(pcb.getMutex());
-			pcbList.getprodPCBbyMutex(mutex).setState(ProcessState.READY);
+			pcbList.getprodPCBbyMutex(mutex).setState(ProcessState.RUNNABLE);
 			//System.out.println("Value taken from memory location " + mutex);
 		}
 	}
@@ -193,7 +193,7 @@ public class CPU extends Thread {
 			//System.out.println("Value added to memory location " + mutex);
 			// Seems like it has to update the consumer from BLOCKED to
 			// READY
-			pcbList.getconPCBbyMutex(mutex).setState(ProcessState.READY);
+			pcbList.getconPCBbyMutex(mutex).setState(ProcessState.RUNNABLE);
 		} else {
 			blockPCB(pcb);
 
